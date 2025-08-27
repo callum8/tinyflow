@@ -14,7 +14,7 @@ class Config:
 
 
 class TinyFlowYAML(Config):
-    def __init__(self, file, str_uuid=None):
+    def __init__(self, file, str_uuid):
         super().__init__(file)
         self.file=file
         self.str_uuid=str_uuid
@@ -44,7 +44,8 @@ class TinyFlowYAML(Config):
 class TransformYAML(Config):
     
     def __init__(self, file):
-        super().__init__(file)
+        Config.__init__(self, file)
+        # super().__init__(file)
         # self.file=file
 
     def yaml(self):
@@ -63,8 +64,10 @@ class TransformYAML(Config):
 
 class Orchestrate(TransformYAML,TinyFlowYAML):
 
-    def __init__(self, transforms):
-        super().__init__(transforms)
+    def __init__(self, file, str_uuid):
+        TransformYAML.__init__(self, file)
+        TinyFlowYAML.__init__(self, file, str_uuid)        
+        # super().__init__(transforms)
         self.tranforms2=self.yaml_tuple()
         dict1 = {}
         for x in self.tranforms2:

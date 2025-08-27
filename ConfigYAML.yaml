@@ -52,10 +52,15 @@ transforms:
   is_deleted: 0
   name: Feed1
 - query: |
-    select count(*) 
-    from 'admin_testing\\test2.parquet' a
-    inner join 'admin_testing\\test2.parquet' b
-    on a.name = b.name
+    copy (
+      select a.name, count(*) 
+      from 'admin_testing\\test2.parquet' a
+      inner join 'admin_testing\\test2.parquet' b
+      on a.name = b.name
+      group by all
+    )
+    TO 'C:\\envs\\tinyflow\\outputok2.parquet'
+    (FORMAT parquet);
   created_at: '2025-06-05 14:36:21'
   insert_uuid: 1451040e-2e8c-478c-91c4-c936153469a4
   is_deleted: 0
